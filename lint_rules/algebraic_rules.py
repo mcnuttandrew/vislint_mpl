@@ -14,7 +14,8 @@ def passes_value_ordering(axes, fig):
         # flip the order back
         for idx in range(len(axes.collections)):
             axes.collections[idx].set_offsets(axes.collections[idx].get_offsets()[::-1])
-        delta = diff('source.png', 'test.png', delete_diff_file=False, diff_img_file='diff_img.jpg')
+        delta = diff('source.png', 'test.png')
+            # , delete_diff_file=False, diff_img_file='diff_img.jpg')
 
         os.remove('source.png')
         os.remove('test.png')

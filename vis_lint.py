@@ -54,7 +54,8 @@ rule_to_function_map = {
     "ten-color-max": passes_ten_color_max,
     "noticeably-different-colors": passes_noticeably_different_colors,
     "colorblind-distinct": passes_colorblind_distinct,
-    "thoughtful-background": passes_thoughtful_background,
+    # "thoughtful-background": passes_thoughtful_background,
+    # actually can not be executed
     "minimum-color-size": passes_minimum_color_size,
 
     ## Annotation
