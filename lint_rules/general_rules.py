@@ -1,3 +1,5 @@
+from utils import get_count_patch_type_count
+
 def passes_require_titles(axes, fig, config_value):
     return len(axes.get_title()) != 0
 
@@ -38,13 +40,6 @@ def passes_require_legend(axes, fig, config_value):
     # [text_length += len(text.get_text()) for text in legend.texts]
 
     return True
-
-def get_count_patch_type_count(patches, patch_type):
-    count = 0
-    for patch in patches:
-        if type(patch).__name__ == patch_type:
-            count += 1
-    return count
 
 def passes_no_pie(axes, fig, config_value):
     return get_count_patch_type_count(axes.patches, 'Wedge') == 0

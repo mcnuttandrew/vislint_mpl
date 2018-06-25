@@ -75,7 +75,10 @@ BASE_CONFIGURATION = {
     "no-radial": True,
 
     # algebraic
-    "value-ordering": 0.1
+    "value-ordering": 0.1,
+
+    # color
+    "ten-color-max": True
 
     # if it's no listed here then it's not written down
 }
@@ -91,9 +94,9 @@ RULES_EXPLANATION = {
     "maximum-pie-pieces": "This pie chart has more than the allowed number of wedges",
     "maximum-histogram-bins": "This histogram has more than the allowed number of bins",
     "no-radial": "Radial charts are not allowed",
-    "value-ordering": "The order the of the points is not significant"
+    "value-ordering": "The order the of the points is not significant",
+    "ten-color-max": "Should have a maximum of ten colors"
 }
-
 
 
 def reconcile_configurations(old_config, new_config):
