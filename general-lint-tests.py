@@ -5,6 +5,8 @@ import numpy as np
 
 from vis_lint import vis_lint
 
+DEFAULT_CONFIGURATION = {}
+
 def test_simple_line_chart():
     # Data for plotting
     t = np.arange(0.0, 2.0, 0.01)
@@ -15,18 +17,17 @@ def test_simple_line_chart():
     fig, ax = plt.subplots()
     ax.plot(t, s)
 
-    assert vis_lint(ax, fig) == [
-        "require-titles",
-        "no-short-titles",
-        "require-axes",
-        "require-legend"
-    ]
+    assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == [
+        ("require-titles", 'Titles are required'),
+        ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
+        ("require-axes", 'Axes must be used'),
+        ("require-legend", 'A legend must be used')]
 
-    ax.set(xlabel='time (s)', ylabel='voltage (mV)',
-           title='About as simple as it gets, folks')
+    ax.set(xlabel="time (s)", ylabel="voltage (mV)",
+           title="About as simple as it gets, folks")
 
-    assert vis_lint(ax, fig) == [
-        "require-legend"
+    assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == [
+        ("require-legend", 'A legend must be used')
     ]
 
 
@@ -46,40 +47,54 @@ def test_histogram():
     # the histogram of the data
     n, bins, patches = ax.hist(x, num_bins, density=1)
 
-    # add a 'best fit' line
+    # add a "best fit" line
     y = ((1 / (np.sqrt(2 * np.pi) * sigma)) *
          np.exp(-0.5 * (1 / sigma * (bins - mu))**2))
-    ax.plot(bins, y, '--')
-    ax.set_xlabel('Smarts')
-    ax.set_ylabel('Probability density')
-    ax.set_title(r'Histogram of IQ: $\mu=100$, $\sigma=15$')
+    ax.plot(bins, y, "--")
+    ax.set_xlabel("Smarts")
+    ax.set_ylabel("Probability density")
+    ax.set_title(r"Histogram of IQ: $\mu=100$, $\sigma=15$")
 
-    assert vis_lint(ax, fig) == [
-        'require-legend',
-        "maximum-histogram-bins"
+    assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == [
+        ("require-legend", 'A legend must be used'),
+        ("maximum-histogram-bins", 'This histogram has more than the allowed number of bins')
     ]
 
 def test_no_py():
     # copied from https://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
     # Pie chart, where the slices will be ordered and plotted counter-clockwise:
-    labels = 'Frogs', 'Hogs', 'Dogs', 'Logs'
+    labels = "Frogs", "Hogs", "Dogs", "Logs"
     sizes = [15, 30, 45, 10]
-    explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. 'Hogs')
+    explode = (0, 0.1, 0, 0)  # only "explode" the 2nd slice (i.e. "Hogs")
 
     fig1, ax1 = plt.subplots()
-    ax1.pie(sizes, explode=explode, labels=labels, autopct='%1.1f%%',
+    ax1.pie(sizes, explode=explode, labels=labels, autopct="%1.1f%%",
             shadow=True, startangle=90)
-    ax1.axis('equal')  # Equal aspect ratio ensures that pie is drawn as a circle.
-    assert vis_lint(ax1, fig1) == [
-        "require-titles",
-        "no-short-titles",
-        "require-axes",
-        "require-legend",
-        "no-pie",
-        "no-radial"
-        # logically this should fail this test, however we can't verify that from the library
+    ax1.axis("equal")  # Equal aspect ratio ensures that pie is drawn as a circle.
+    assert vis_lint(ax1, fig1, DEFAULT_CONFIGURATION) == [
+        ("require-titles", 'Titles are required'),
+        ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
+        ("require-axes", 'Axes must be used'),
+        ("require-legend", 'A legend must be used'),
+        ("no-pie", 'Pie charts are not allowed'),
+        ("no-radial", 'Radial charts are not allowed')
+        # logically this should fail this test, however we can"t verify that from the library
         # level i think
-        # "value-ordering"
+        # ("value-ordering", 'The order the of the points is not significant')
+    ]
+
+    alt_configuration = {
+        "require-axes": False,
+        "no-pie": False,
+        "no-radial": False,
+        "maximum-pie-pieces": 3
+    }
+
+    assert vis_lint(ax1, fig1, alt_configuration) == [
+        ("require-titles", 'Titles are required'),
+        ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
+        ("require-legend", 'A legend must be used'),
+        ("maximum-pie-pieces", 'This pie chart has more than the allowed number of wedges')
     ]
 
 # # algebraic smoke test?
@@ -92,10 +107,10 @@ def test_scatterplot():
     fig, ax = plt.subplots()
     ax.scatter(x, y, s=area, c=colors)
 
-    assert vis_lint(ax, fig) == [
-        "require-titles",
-        "no-short-titles",
-        "require-axes",
-        "require-legend",
-        "value-ordering"
+    assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == [
+        ("require-titles", 'Titles are required'),
+        ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
+        ("require-axes", 'Axes must be used'),
+        ("require-legend", 'A legend must be used'),
+        ("value-ordering", 'The order the of the points is not significant')
     ]
