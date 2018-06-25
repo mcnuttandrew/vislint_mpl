@@ -30,6 +30,29 @@ def test_simple_line_chart():
         ("require-legend", 'A legend must be used')
     ]
 
+    ax.legend("Example legend")
+    assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == []
+
+# this test should mostly be done, however i rage quit when textstat didn't do what it advertised
+# def test_reading_level():
+#     t = np.arange(0.0, 2.0, 0.01)
+#     s = 1 + np.sin(2 * np.pi * t)
+#     fig, ax = plt.subplots()
+#     ax.plot(t, s)
+#
+#     reading_level_config = {
+#         "require-titles": True,
+#         "no-short-titles": True,
+#         "require-axes": False,
+#         "require-legend": False,
+#         "sentencify": True
+#     }
+#
+#     ax.set(title="About as simple as it gets, folks")
+#
+#     assert vis_lint(ax, fig, reading_level_config) == [
+#         ("sentencify", 'should find that not complete sentences are still sentences')
+#     ]
 
 # https://matplotlib.org/gallery/statistics/histogram_features.html
 def test_histogram():
