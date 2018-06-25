@@ -1,32 +1,25 @@
 from utils import get_count_patch_type_count
 
-def get_num_color_in_scatterplot(ax):
-    # thats just a count of all of the colors, not the unique colors
+def count_uniques(colors):
     sum_colors = 0
     seen_colors = {}
-    for collection in ax.collections:
-        for color in collection.get_facecolors():
-            str_color = str(color)
-            if not str_color in seen_colors:
-                seen_colors[str_color] = True
-                sum_colors += 1
-
-    return sum_colors
-
-
-def get_num_color_in_patches(ax, patchtype):
-    # thats just a count of all of the colors, not the unique colors
-    sum_colors = 0
-    seen_colors = {}
-    for patch in ax.patches:
-        if not type(patch).__name__ == patchtype:
-            continue
-        str_color = str(patch.get_facecolor())
-        if not str_color in seen_colors:
-            seen_colors[str_color] = True
+    for color in colors:
+        if not color in seen_colors:
+            seen_colors[color] = True
             sum_colors += 1
 
     return sum_colors
+
+def get_num_color_in_scatterplot(ax):
+    colors = []
+    for collection in ax.collections:
+        [colors.append(str(color)) for color in collection.get_facecolors()]
+    return count_uniques(colors)
+
+
+def get_num_color_in_patches(ax, patchtype):
+    colors = [str(patch.get_facecolor()) for patch in ax.patches if type(patch).__name__ == patchtype]
+    return count_uniques(colors)
 
 def passes_no_color_ramps(axes, fig, config_value):
     return False
