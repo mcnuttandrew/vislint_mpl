@@ -1,3 +1,7 @@
+import textstat_copy
+
+textstat = textstat_copy.textstat
+
 from utils import get_count_patch_type_count
 
 def passes_require_titles(axes, fig, config_value):
@@ -7,14 +11,13 @@ def passes_no_short_titles(axes, fig, config_value):
     return len(axes.get_title().split(' ')) > config_value
 
 def passes_sentencify(axes, fig, config_value):
-    return sentence_count(axes.get_title()) >= 1
+    count = textstat.sentence_count(axes.get_title())
+    print(count, axes.get_title())
+    return count >= 1
 
 def passes_no_complex_titles(axes, fig, config_value):
-    # print('???')
-    # print_methods(textstat)
-    # value = config_value if str(config_value).isdigit() else 69
-    # return flesch_reading_ease(value) >= value
-    return False
+    value = config_value if str(config_value).isdigit() else 69
+    return textstat.flesch_reading_ease(axes.get_title()) >= value
 
 def passes_maximum_encoding(axes, fig, config_value):
     return False
