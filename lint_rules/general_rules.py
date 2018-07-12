@@ -1,6 +1,4 @@
-import textstat_copy
-
-textstat = textstat_copy.textstat
+from textstat.textstat import textstat
 
 from utils import get_count_patch_type_count
 
@@ -11,9 +9,7 @@ def passes_no_short_titles(axes, fig, config_value):
     return len(axes.get_title().split(' ')) > config_value
 
 def passes_sentencify(axes, fig, config_value):
-    count = textstat.sentence_count(axes.get_title())
-    print(count, axes.get_title())
-    return count >= 1
+    return textstat.sentence_count(axes.get_title()) >= 1
 
 def passes_no_complex_titles(axes, fig, config_value):
     value = config_value if str(config_value).isdigit() else 69
