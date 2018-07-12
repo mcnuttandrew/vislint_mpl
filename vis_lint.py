@@ -28,6 +28,7 @@ rule_to_function_map = {
     "maximum-encoding": passes_maximum_encoding,
     "require-axes": passes_require_axes,
     "require-legend": passes_require_legend,
+    "no-indistinguishable-series": passes_no_indistinguishable_series,
     "no-pie": passes_no_pie,
     "maximum-pie-pieces": passes_maximum_pie_pieces,
     "maximum-histogram-bins": passes_maximum_histogram_bins,
@@ -51,7 +52,7 @@ rule_to_function_map = {
 
     ## Color
     "no-color-ramps": passes_no_color_ramps,
-    "ten-color-max": passes_ten_color_max,
+    "max-colors": passes_max_colors,
     "noticeably-different-colors": passes_noticeably_different_colors,
     "colorblind-distinct": passes_colorblind_distinct,
     "minimum-color-size": passes_minimum_color_size,
@@ -67,6 +68,7 @@ BASE_CONFIGURATION = {
     "no-short-titles": 1,
     "require-axes": True,
     "require-legend": True,
+    "no-indistinguishable-series": True,
     "no-complex-titles": False,
     "sentencify": False,
     "no-pie": True,
@@ -78,7 +80,7 @@ BASE_CONFIGURATION = {
     "only-data-driven-visuals": 0.1,
 
     # color
-    "ten-color-max": True,
+    "max-colors": 6,
 
     # ml rules
     "ledgible-text": False,
@@ -93,14 +95,15 @@ RULES_EXPLANATION = {
     "no-short-titles": "Short titles are not allowed (must be greater than 1 word)",
     "no-complex-titles": "Title should be easy to read",
     "sentencify": "Title should be in complete sentences",
-    "require-axes": "Axes must be used",
+    "require-axes": "Axes must be labeled",
     "require-legend": "A legend must be used",
     "no-pie": "Pie charts are not allowed",
     "maximum-pie-pieces": "This pie chart has more than the allowed number of wedges",
     "maximum-histogram-bins": "This histogram has more than the allowed number of bins",
     "no-radial": "Radial charts are not allowed",
     "only-data-driven-visuals": "The order the of the points is not significant",
-    "ten-color-max": "Should have a maximum of ten colors",
+    "max-colors": "Too many colors",
+    "no-indistinguishable-series": "Series must be distinguishable",
     "require-annotation": "annotations must be used",
     "ledgible-text": "text must be ledgible"
 }

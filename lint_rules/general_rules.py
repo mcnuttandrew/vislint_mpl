@@ -40,6 +40,32 @@ def passes_require_legend(axes, fig, config_value):
 
     return True
 
+# only checks multiple artist groups
+def passes_no_indistinguishable_series(axes, fig, config_value):
+    if len(axes.collections) >= 1:
+        return True
+
+    if axes.get_legend():
+        seen_texts = {}
+        for text in list(axes.get_legend().get_texts()):
+            to_hash = text.get_text()
+            if to_hash in seen_texts:
+                return False
+            seen_texts[to_hash] = True
+
+    seen_mark_types = {}
+    children_to_check = [child for child in axes.get_children() if type(child).__name__ == 'Line2D']
+    if not len(children_to_check):
+        return True
+
+    for child in children_to_check:
+        mark_and_color = (child.get_marker(), child.get_color())
+        if mark_and_color in seen_mark_types:
+            return False
+        seen_mark_types[mark_and_color] = True
+    return True
+
+
 def passes_no_pie(axes, fig, config_value):
     return get_count_patch_type_count(axes.patches, 'Wedge') == 0
 
