@@ -8,17 +8,17 @@ from general_rules import *
 from hierarchical_rules import *
 from network_rules import *
 from xy_rules import *
+from ml_rules import *
 
 def print_methods(input_obj):
     print('\n'.join([x for x in dir(input_obj)]))
 
 rule_to_function_map = {
     ## Algebraic rules
-    "value-ordering": passes_value_ordering,
-    # TODO
+    "only-data-driven-visuals": passes_only_data_driven_visuals,
 
-    ## VisGuide rules?
-    # TODO tuftian rules, like data-ink-ratio
+    ## ML
+    "ledgible-text": passes_ledgible_text,
 
     ## General
     "require-titles": passes_require_titles,
@@ -75,10 +75,15 @@ BASE_CONFIGURATION = {
     "no-radial": True,
 
     # algebraic
-    "value-ordering": 0.1,
+    "only-data-driven-visuals": 0.1,
 
     # color
-    "ten-color-max": True
+    "ten-color-max": True,
+
+    # ml rules
+    "ledgible-text": False,
+
+    "require-annotation": False
 
     # if it's no listed here then it's not written down
 }
@@ -94,8 +99,10 @@ RULES_EXPLANATION = {
     "maximum-pie-pieces": "This pie chart has more than the allowed number of wedges",
     "maximum-histogram-bins": "This histogram has more than the allowed number of bins",
     "no-radial": "Radial charts are not allowed",
-    "value-ordering": "The order the of the points is not significant",
-    "ten-color-max": "Should have a maximum of ten colors"
+    "only-data-driven-visuals": "The order the of the points is not significant",
+    "ten-color-max": "Should have a maximum of ten colors",
+    "require-annotation": "annotations must be used",
+    "ledgible-text": "text must be ledgible"
 }
 
 

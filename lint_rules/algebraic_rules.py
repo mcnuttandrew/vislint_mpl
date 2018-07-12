@@ -1,9 +1,8 @@
 import os
 from diffimg import diff
 
-def passes_value_ordering(axes, fig, config_value):
+def passes_only_data_driven_visuals(axes, fig, config_value):
     # some how figure out which type of thing is being drawn?
-    # i guess this is assuming only one series is being drawn
     if len(axes.collections) >= 1:
         fig.savefig('source.png')
         # flip the order in every collection
@@ -14,8 +13,7 @@ def passes_value_ordering(axes, fig, config_value):
         # flip the order back
         for idx in range(len(axes.collections)):
             axes.collections[idx].set_offsets(axes.collections[idx].get_offsets()[::-1])
-        delta = diff('source.png', 'test.png')
-            # , delete_diff_file=False, diff_img_file='diff_img.jpg')
+        delta = diff('source.png', 'test.png', delete_diff_file=True, diff_img_file='diff_img.jpg')
 
         os.remove('source.png')
         os.remove('test.png')
