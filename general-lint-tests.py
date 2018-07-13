@@ -7,7 +7,7 @@ from vis_lint import vis_lint
 
 DEFAULT_CONFIGURATION = {}
 
-def test_simple_line_chart():
+def generic_scatterplot():
     # Data for plotting
     t = np.arange(0.0, 2.0, 0.01)
     s = 1 + np.sin(2 * np.pi * t)
@@ -16,6 +16,10 @@ def test_simple_line_chart():
     # fig = plt.figure() and then ax = fig.add_subplot(111)
     fig, ax = plt.subplots()
     ax.plot(t, s)
+    return (ax, fig)
+
+def test_simple_line_chart():
+    (ax, fig) = generic_scatterplot()
 
     assert vis_lint(ax, fig, DEFAULT_CONFIGURATION) == [
         ("require-titles", 'Titles are required'),
@@ -35,10 +39,7 @@ def test_simple_line_chart():
 
 # this test should mostly be done, however i rage quit when textstat didn't do what it advertised
 def test_reading_level():
-    t = np.arange(0.0, 2.0, 0.01)
-    s = 1 + np.sin(2 * np.pi * t)
-    fig, ax = plt.subplots()
-    ax.plot(t, s)
+    (ax, fig) = generic_scatterplot()
 
     reading_level_config = {
         "require-titles": True,
@@ -254,3 +255,28 @@ def test_multi_series_plot_test():
 #         "ledgible-text": True,
 #         "require-annotation": True
 #     }) == []
+
+
+def passes_only_data_driven_visuals(axes, fig, config_value):
+    return axes.get_title() == 'big bird'
+example_custom_rule = (
+    "big-bird-title",
+    passes_only_data_driven_visuals,
+    False,
+    "Title must be equal to big bird"
+)
+
+def test_custom_rule():
+    (ax, fig) = generic_scatterplot()
+
+    custom_config = {"custom_checks": [example_custom_rule]}
+    assert vis_lint(ax, fig, custom_config) == [
+        ("require-titles", 'Titles are required'),
+        ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
+        ("require-axes", 'Axes must be labeled'),
+        ("require-legend", 'A legend must be used'),
+        (example_custom_rule[0], example_custom_rule[3])]
+
+    ax.set(xlabel="X", ylabel="Y", title="big bird")
+
+    assert vis_lint(ax, fig, custom_config) == [('require-legend', 'A legend must be used')]
