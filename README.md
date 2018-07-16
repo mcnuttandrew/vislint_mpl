@@ -22,7 +22,7 @@ This work is in the proof of concept stage of development, it is messy and there
 - ledgible-text (not fully working)
 
 
-In the additional materials folder, we have included a speculative list of a wide variety of additional lint rules, along with notes as to how they might be created. Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/).
+In the additional materials folder, we have included a speculative list of a wide variety of additional lint rules, along with notes as to how they might be created. Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/). The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as reference while creating it.
 
 Also found in the same folder is a Jupyter notebook used to produce the figure found in the paper associated with this work.  That graphic is drawn from the sprawling github Jupyter notebook corpus found [here](https://library.ucsd.edu/dc/collection/bb6931851t). The figure used in the paper is drawn from a reconstruction of the original notebook (rebuild rebuild_of_nb_266110) which we present along side the original (nb_266110) for transparency.  
 
@@ -80,7 +80,7 @@ In addition to manipulating standard rules the user can also provide additional 
 This library is kept in check by running unit tests over the various lint rules. Our tests can be run via:
 
 ```sh
-pytest -vv general-lint-tests.py
+pytest -vv general_lint_tests.py
 ```
 
 

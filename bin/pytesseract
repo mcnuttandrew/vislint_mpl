@@ -1,4 +1,4 @@
-#!/Users/mcnutt/vis-lint/bin/python3
+#!/Users/mcnutt/vis_lint/bin/python3
 # EASY-INSTALL-ENTRY-SCRIPT: 'pytesseract==0.2.2','console_scripts','pytesseract'
 __requires__ = 'pytesseract==0.2.2'
 import re

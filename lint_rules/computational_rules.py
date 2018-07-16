@@ -1,12 +1,19 @@
+"""
+Lint rules for purely computational rules
+"""
+
+import os
 try:
     import Image
 except ImportError:
     from PIL import Image
 import pytesseract
-import os
 
 
 def passes_ledgible_text(axes, fig, config_value):
+    """
+    lint rule for ledgible-text
+    """
     fig.savefig('mlsource.png')
     viewed_text = pytesseract.image_to_string(Image.open('mlsource.png'))
     os.remove('mlsource.png')

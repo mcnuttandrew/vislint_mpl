@@ -1,68 +1,43 @@
-import sys
+"""
+Root of the vis lint library, imports all of the relevant rules
+and provides to main api
+"""
 
-sys.path.append('./lint_rules')
-from algebraic_rules import *
-from annotation_rules import *
-from color_rules import *
-from general_rules import *
-from hierarchical_rules import *
-from network_rules import *
-from xy_rules import *
-from ml_rules import *
+import lint_rules.algebraic_rules as algebraic_rules
+import lint_rules.annotation_rules as annotation_rules
+import lint_rules.color_rules as color_rules
+import lint_rules.computational_rules as computational_rules
+import lint_rules.general_rules as general_rules
 
-def print_methods(input_obj):
-    print('\n'.join([x for x in dir(input_obj)]))
-
-rule_to_function_map = {
+RULE_TO_FUNCTION_MAP = {
     ## Algebraic rules
-    "only-data-driven-visuals": passes_only_data_driven_visuals,
-
-    ## ML
-    "ledgible-text": passes_ledgible_text,
-
-    ## General
-    "require-titles": passes_require_titles,
-    "no-short-titles": passes_no_short_titles,
-    "sentencify": passes_sentencify,
-    "no-complex-titles": passes_no_complex_titles,
-    "maximum-encoding": passes_maximum_encoding,
-    "require-axes": passes_require_axes,
-    "require-legend": passes_require_legend,
-    "no-indistinguishable-series": passes_no_indistinguishable_series,
-    "no-pie": passes_no_pie,
-    "maximum-pie-pieces": passes_maximum_pie_pieces,
-    "maximum-histogram-bins": passes_maximum_histogram_bins,
-    "no-radial": passes_no_radial,
-    # possible additional rules: require labels, no-explode, no-shadow
-
-    ## XY
-    "collision-handling": passes_collision_handling,
-    "fitts-law-handling": passes_fitts_law_handling,
-    "uncertainty-encoding": passes_uncertainty_encoding,
-    "error-encoding": passes_error_encoding,
-    "mind-the-gap": passes_mind_the_gap,
-
-    ## Hierarchical
-    "no-hierarchical-small-multiples": passes_no_hierarchical_small_multiples,
-    "atomic-circle-pack": passes_atomic_circle_pack,
-    "minimum-treemap-leaf-edge": passes_minimum_treemap_leaf_edge,
-
-    ## Network
-    "orphanage-n": passes_orphanage_n,
-
-    ## Color
-    "no-color-ramps": passes_no_color_ramps,
-    "max-colors": passes_max_colors,
-    "noticeably-different-colors": passes_noticeably_different_colors,
-    "colorblind-distinct": passes_colorblind_distinct,
-    "minimum-color-size": passes_minimum_color_size,
+    "only-data-driven-visuals": algebraic_rules.passes_only_data_driven_visuals,
 
     ## Annotation
-    "require-annotation": passes_require_annotation
+    "require-annotation": annotation_rules.passes_require_annotation,
+
+    ## computational
+    "ledgible-text": computational_rules.passes_ledgible_text,
+
+    ## Color
+    "max-colors": color_rules.passes_max_colors,
+
+    ## General
+    "require-titles": general_rules.passes_require_titles,
+    "no-short-titles": general_rules.passes_no_short_titles,
+    "sentencify": general_rules.passes_sentencify,
+    "no-complex-titles": general_rules.passes_no_complex_titles,
+    "require-axes": general_rules.passes_require_axes,
+    "require-legend": general_rules.passes_require_legend,
+    "no-indistinguishable-series": general_rules.passes_no_indistinguishable_series,
+    "no-pie": general_rules.passes_no_pie,
+    "maximum-pie-pieces": general_rules.passes_maximum_pie_pieces,
+    "maximum-histogram-bins": general_rules.passes_maximum_histogram_bins,
+    "no-radial": general_rules.passes_no_radial
 }
 
-
-BASE_CONFIGURATION = {
+# if it's no listed here then it's not written down
+DEFAULT_CONFIGURATION = {
     # basic xy
     "require-titles": True,
     "no-short-titles": 1,
@@ -86,8 +61,6 @@ BASE_CONFIGURATION = {
     "ledgible-text": False,
 
     "require-annotation": False
-
-    # if it's no listed here then it's not written down
 }
 
 RULES_EXPLANATION = {
@@ -127,10 +100,10 @@ def vis_lint(axes, fig, configuration):
     configuration is a map with keys equals to rules and values equal to configurable values
     """
 
-    rules_to_check = reconcile_configurations(BASE_CONFIGURATION, configuration)
+    rules_to_check = reconcile_configurations(DEFAULT_CONFIGURATION, configuration)
     failed_checks = []
     for (rule, config_value) in rules_to_check:
-        rule_to_eval = rule_to_function_map[rule]
+        rule_to_eval = RULE_TO_FUNCTION_MAP[rule]
         if not rule_to_eval(axes, fig, config_value):
             msg = RULES_EXPLANATION[rule]
             failed_checks.append((rule, msg))
