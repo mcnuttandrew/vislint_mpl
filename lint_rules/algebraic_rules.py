@@ -7,7 +7,7 @@ from diffimg import diff
 
 def passes_only_data_driven_visuals(axes, fig, config_value):
     """
-    Lint rule for only-data-driven-visuals
+    Lint rule for representation-invariance
     """
     # some how figure out which type of thing is being drawn?
     if len(axes.collections) >= 1:

@@ -1,5 +1,5 @@
 """
-Root of the vis lint library, imports all of the relevant rules
+Root of the vislint library, imports all of the relevant rules
 and provides to main api
 """
 
@@ -11,7 +11,7 @@ import lint_rules.general_rules as general_rules
 
 RULE_TO_FUNCTION_MAP = {
     ## Algebraic rules
-    "only-data-driven-visuals": algebraic_rules.passes_only_data_driven_visuals,
+    "representation-invariance": algebraic_rules.passes_only_data_driven_visuals,
 
     ## Annotation
     "require-annotation": annotation_rules.passes_require_annotation,
@@ -52,7 +52,7 @@ DEFAULT_CONFIGURATION = {
     "no-radial": True,
 
     # algebraic
-    "only-data-driven-visuals": 0.1,
+    "representation-invariance": 0.1,
 
     # color
     "max-colors": 6,
@@ -74,7 +74,7 @@ RULES_EXPLANATION = {
     "maximum-pie-pieces": "This pie chart has more than the allowed number of wedges",
     "maximum-histogram-bins": "This histogram has more than the allowed number of bins",
     "no-radial": "Radial charts are not allowed",
-    "only-data-driven-visuals": "The order the of the points is not significant",
+    "representation-invariance": "The order the of the points is not significant",
     "max-colors": "Too many colors",
     "no-indistinguishable-series": "Series must be distinguishable",
     "require-annotation": "annotations must be used",
@@ -94,7 +94,7 @@ def reconcile_configurations(old_config, new_config):
             rules_to_check.append((rule_name, new_config[rule_name]))
     return rules_to_check
 
-def vis_lint(axes, fig, configuration):
+def vislint(axes, fig, configuration):
     """
     Run lint on a matplotlib object, axes and fig are standard matplotlib objects
     configuration is a map with keys equals to rules and values equal to configurable values

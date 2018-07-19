@@ -210,7 +210,7 @@
   "Annotation":"Dont have multiple categories that are apparently about the same thing, also could apply to bar charts"
 },{
   "Category":"Algebraic",
-  "Rule":"no-connected-ordinal-values",
+  "Rule":"no-connected-categories",
   "Author":"mcnutt",
   "Lint Explanation":"dont connect categorical values with line charts",
   "Implementation Notes":"if a user is using bar charts on a categorical axis, ensure they are not using line charts.",
@@ -231,7 +231,7 @@
   "Annotation":"See algebraic visualization design paper for more details"
 },{
   "Category":"Algebraic",
-  "Rule":"only-data-driven-visuals",
+  "Rule":"representation-invariance",
   "Author":"mcnutt",
   "Lint Explanation":"The order the of the points is not significant",
   "Implementation Notes":"Non significantly alter the input data to a chart (such as re-ordering it) and do a pixel difference between the resultin images",
