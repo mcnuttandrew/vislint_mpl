@@ -1,6 +1,6 @@
-# vislint-mpl: a prototype visualization linter for matplotlib
+# vislint-mpl-mpl: a prototype visualization linter for matplotlib
 
-vislint-mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting provides a robust mechanism to provide guidance to chart creators as the work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint-mpl is a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through code editors now.
+vislint-mpl-mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting provides a robust mechanism to provide guidance to chart creators as the work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint-mpl-mpl is a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through code editors now.
 
 
 This work is in the proof of concept stage of development, it is messy and there are limited number of rules implemented. Currently the rules that are implemented are:
@@ -30,7 +30,7 @@ Also found in the same folder is a Jupyter notebook used to produce the figure f
 
 This library consists of a single function that takes three arguments
 
-vislint(**axes**, **fig**, **configuration**)
+vislint-mpl(**axes**, **fig**, **configuration**)
 
 - **axes** - matplotlib [axes](https://matplotlib.org/api/axes_api.html) object
 

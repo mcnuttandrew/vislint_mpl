@@ -1,5 +1,5 @@
 """
-The tests for the vislint library
+The tests for the vislint-mpl library
 """
 
 import matplotlib.pyplot as plt

@@ -1,5 +1,5 @@
 """
-Root of the vislint library, imports all of the relevant rules
+Root of the vislint-mpl library, imports all of the relevant rules
 and provides to main api
 """
 
