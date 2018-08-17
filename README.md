@@ -1,6 +1,6 @@
 # vislint_mpl: a prototype visualization linter for matplotlib
 
-vislint_mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting provides a robust mechanism to provide guidance to chart creators as the work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint_mpl is a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through code editors now.
+vislint_mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting provides a robust mechanism to provide guidance to chart creators as the work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint_mpl in a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through code editors now.
 
 
 This work is in the proof of concept stage of development, it is messy and there are limited number of rules implemented. Currently the rules that are implemented are:
