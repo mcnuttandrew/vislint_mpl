@@ -22,9 +22,9 @@ This work is in the proof of concept stage of development, it is messy and there
 - ledgible-text (not fully working)
 
 
-In the additional materials folder, we have included a speculative list of a wide variety of additional lint rules, along with notes as to how they might be created. Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/). The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as reference while creating it.
+Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/). The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as reference while creating it.
 
-Also found in the same folder is a Jupyter notebook used to produce the figure found in the paper associated with this work.  That graphic is drawn from the sprawling github Jupyter notebook corpus found [here](https://library.ucsd.edu/dc/collection/bb6931851t). The figure used in the paper is drawn from a reconstruction of the original notebook (rebuild rebuild_of_nb_266110) which we present along side the original (nb_266110) for transparency.  
+In the additional materials folder we provide a collection of additional lint rules and example notebooks of using vislint_mpl against charts sometimes found in the wild.
 
 ## API
 
@@ -110,10 +110,13 @@ Now you should be all set to go!
 
 
 ## Additional Materials
-As noted above in the additional materials section we present several notebooks of interest. In order to run these, first have jupyter installed, activate in the same fashion as noted above, and then run
+
+In the additional materials folder, we have included a speculative list of a wide variety of additional lint rules, along with notes as to how they might be created. As noted above in the additional materials section we present several notebooks of interest. In order to run these, first have jupyter installed, activate in the same fashion as noted above, and then run:
 
 ```sh
 jupyter notebook
 ```
 
 It may be necessary to also run ```ipython kernel install --user``` in order to get everything installe correctly.
+
+Of particular note, we have provided the notebook used to produce the figure found in the paper associated with this work. That graphic is drawn from the sprawling github Jupyter notebook corpus found [here](https://library.ucsd.edu/dc/collection/bb6931851t). The figure used in the paper is drawn from a reconstruction of the original notebook (rebuild rebuild_of_nb_266110) which we present along side the original (nb_266110) for transparency.
