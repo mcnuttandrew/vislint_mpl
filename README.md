@@ -20,6 +20,7 @@ This work is in the proof of concept stage of development, it is messy and there
 - no-indistinguishable-series
 - require-annotation
 - ledgible-text (not fully working)
+- printable-colors
 
 
 Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/). The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as reference while creating it.
