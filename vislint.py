@@ -142,12 +142,13 @@ def reconcile_configurations(old_config, new_config):
             rules_to_check.append((rule_name, new_config[rule_name]))
     return rules_to_check
 
-def vislint(axes, fig, configuration):
+def vislint(axes, fig, configuration=None):
     """
     Run lint on a matplotlib object, axes and fig are standard matplotlib objects
     configuration is a map with keys equals to rules and values equal to configurable values
     """
-
+    if configuration is None:
+        configuration = {}
     rules_to_check = reconcile_configurations(DEFAULT_CONFIGURATION, configuration)
     failed_checks = []
     for (rule, config_value) in rules_to_check:

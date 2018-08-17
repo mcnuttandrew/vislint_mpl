@@ -29,7 +29,7 @@ def test_simple_line_chart():
     """
     (axes, fig) = generic_scatterplot()
 
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == [
+    assert vislint(axes, fig) == [
         ("require-titles", 'Titles are required'),
         ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
         ("require-axes", 'Axes must be labeled'),
@@ -38,12 +38,12 @@ def test_simple_line_chart():
     axes.set(xlabel="time (s)", ylabel="voltage (mV)",
              title="About as simple as it gets, folks")
 
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == [
+    assert vislint(axes, fig) == [
         ("require-legend", 'A legend must be used')
     ]
 
     axes.legend("Example legend")
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == []
+    assert vislint(axes, fig) == []
 
 
 def test_reading_level():
@@ -100,7 +100,7 @@ def test_histogram():
     axes.set_ylabel("Probability density")
     axes.set_title(r"Histogram of IQ: $\mu=100$, $\sigma=15$")
 
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == [
+    assert vislint(axes, fig) == [
         ("require-legend", 'A legend must be used'),
         ("maximum-histogram-bins", 'This histogram has more than the allowed number of bins')
     ]
@@ -166,7 +166,7 @@ def test_small_scatterplot():
     fig, axes = plt.subplots()
     axes.scatter(x_points, y_points, s=area, c=colors)
 
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == [
+    assert vislint(axes, fig) == [
         ("require-titles", 'Titles are required'),
         ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
         ("require-axes", 'Axes must be labeled'),
@@ -195,7 +195,7 @@ def test_colors():
     )
     axes.legend(" ex legend ")
 
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == [
+    assert vislint(axes, fig) == [
         ("max-colors", 'Too many colors')
     ]
     # remove the previous scatterplot
@@ -203,7 +203,7 @@ def test_colors():
 
     colors = [idx % 5 for idx in range(n_rows)]
     axes.scatter(x_vals, y_vals, s=area, c=colors, alpha=0.5)
-    assert vislint(axes, fig, DEFAULT_CONFIGURATION) == []
+    assert vislint(axes, fig) == []
 
 def test_multi_series_plot_test():
     """
@@ -245,14 +245,14 @@ def test_multi_series_plot_test():
     ]
 
     axes, fig = build_chart(data)
-    assert vislint(axes, fig, {"representation-invariance": 0.01}) == []
+    assert vislint(axes, fig, configuration={"representation-invariance": 0.01}) == []
 
     data.append({"left": [1, 2, 3], "right": [4, 5, 6], "maker": 'seadogs'})
     data.append({"left": [1, 2, 3], "right": [4, 5, 6], "maker": 'giraffes'})
     data.append({"left": [1, 2, 3], "right": [4, 5, 6], "maker": 'octopus'})
 
     axes, fig = build_chart(data)
-    assert vislint(axes, fig, {"representation-invariance": 0.01}) == [
+    assert vislint(axes, fig, configuration={"representation-invariance": 0.01}) == [
         ('no-indistinguishable-series', 'Series must be distinguishable')
     ]
 
@@ -261,7 +261,7 @@ def test_multi_series_plot_test():
         {"left": [1, 2, 3], "right": [4, 5, 6], "maker": 'seadogs'},
     ]
     axes, fig = build_chart(dup_data)
-    assert vislint(axes, fig, {"representation-invariance": 0.01}) == [
+    assert vislint(axes, fig, configuration={"representation-invariance": 0.01}) == [
         ('no-indistinguishable-series', 'Series must be distinguishable')
     ]
 
@@ -288,7 +288,7 @@ def test_multi_series_plot_test():
 #     for idx in range(len(labels)):
 #         ax.annotate(labels[idx], (x[idx] + 0.001, y[idx] + 0.001), fontsize=20)
 #     # does very very poorly
-#     assert vislint(ax, fig, {
+#     assert vislint(ax, fig, configuration={
 #         "ledgible-text": True,
 #         "require-annotation": True
 #     }) == []
@@ -315,7 +315,7 @@ def test_custom_rule():
     (axes, fig) = generic_scatterplot()
 
     custom_config = {"custom_checks": [EXAMPLE_CUSTOM_TEST]}
-    assert vislint(axes, fig, custom_config) == [
+    assert vislint(axes, fig, configuration=custom_config) == [
         ("require-titles", 'Titles are required'),
         ("no-short-titles", 'Short titles are not allowed (must be greater than 1 word)'),
         ("require-axes", 'Axes must be labeled'),
@@ -324,4 +324,5 @@ def test_custom_rule():
 
     axes.set(xlabel="X", ylabel="Y", title="big bird")
 
-    assert vislint(axes, fig, custom_config) == [('require-legend', 'A legend must be used')]
+    expected = [('require-legend', 'A legend must be used')]
+    assert vislint(axes, fig, configuration=custom_config) == expected
