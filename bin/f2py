@@ -1,4 +1,4 @@
-#!/Users/mcnutt/vislint-mpl/bin/python3
+#!/Users/mcnutt/vislint_mpl/bin/python3
 # See http://cens.ioc.ee/projects/f2py2e/
 from __future__ import division, print_function
 

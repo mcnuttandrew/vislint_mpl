@@ -106,3 +106,6 @@ venv.bak/
 .mypy_cache/
 
 diff_img.jpg
+test.png
+source.png
+__init__.py
