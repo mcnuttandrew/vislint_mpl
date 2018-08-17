@@ -129,6 +129,7 @@ def test_no_pie():
         ("require-legend", 'A legend must be used'),
         ("no-pie", 'Pie charts are not allowed'),
         ("no-radial", 'Radial charts are not allowed'),
+        ('printable-colors', 'Colors must be printable'),
         # logically this should fail this test, however we can"t verify that from the library
         # level i think
         # ("representation-invariance", 'The order the of the points is not significant')
@@ -148,10 +149,11 @@ def test_no_pie():
         ("require-legend", 'A legend must be used'),
         ("maximum-pie-pieces", 'This pie chart has more than the allowed number of wedges'),
         ('max-colors', 'Too many colors'),
-        ("require-annotation", "annotations must be used")
+        ('printable-colors', 'Colors must be printable'),
+        ("require-annotation", "annotations must be used"),
     ]
 
-# # algebraic smoke test?
+# algebraic smoke test?
 def test_small_scatterplot():
     """
     Test focusing on algebraic scatterplot

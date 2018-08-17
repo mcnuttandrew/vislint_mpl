@@ -3,83 +3,131 @@ Root of the vislint_mpl library, imports all of the relevant rules
 and provides to main api
 """
 
+from collections import namedtuple
+
 import lint_rules.algebraic_rules as algebraic_rules
 import lint_rules.annotation_rules as annotation_rules
 import lint_rules.color_rules as color_rules
 import lint_rules.computational_rules as computational_rules
 import lint_rules.general_rules as general_rules
 
-RULE_TO_FUNCTION_MAP = {
-    ## Algebraic rules
-    "representation-invariance": algebraic_rules.passes_only_data_driven_visuals,
+Rule = namedtuple('Rule', 'title default explanation rule_eval')
 
-    ## Annotation
-    "require-annotation": annotation_rules.passes_require_annotation,
-
-    ## computational
-    "ledgible-text": computational_rules.passes_ledgible_text,
-
-    ## Color
-    "max-colors": color_rules.passes_max_colors,
-
-    ## General
-    "require-titles": general_rules.passes_require_titles,
-    "no-short-titles": general_rules.passes_no_short_titles,
-    "sentencify": general_rules.passes_sentencify,
-    "no-complex-titles": general_rules.passes_no_complex_titles,
-    "require-axes": general_rules.passes_require_axes,
-    "require-legend": general_rules.passes_require_legend,
-    "no-indistinguishable-series": general_rules.passes_no_indistinguishable_series,
-    "no-pie": general_rules.passes_no_pie,
-    "maximum-pie-pieces": general_rules.passes_maximum_pie_pieces,
-    "maximum-histogram-bins": general_rules.passes_maximum_histogram_bins,
-    "no-radial": general_rules.passes_no_radial
-}
-
-# if it's no listed here then it's not written down
-DEFAULT_CONFIGURATION = {
+RULES_CONFIGS = [
     # basic xy
-    "require-titles": True,
-    "no-short-titles": 1,
-    "require-axes": True,
-    "require-legend": True,
-    "no-indistinguishable-series": True,
-    "no-complex-titles": False,
-    "sentencify": False,
-    "no-pie": True,
-    "maximum-pie-pieces": 6,
-    "maximum-histogram-bins": 50,
-    "no-radial": True,
+    Rule(
+        "require-titles",
+        True,
+        "Titles are required",
+        general_rules.passes_require_titles
+    ),
+    Rule(
+        "no-short-titles",
+        1,
+        "Short titles are not allowed (must be greater than 1 word)",
+        general_rules.passes_no_short_titles
+    ),
+    Rule(
+        "sentencify",
+        False,
+        "Title should be in complete sentences",
+        general_rules.passes_sentencify
+    ),
+    Rule(
+        "require-axes",
+        True,
+        "Axes must be labeled",
+        general_rules.passes_require_axes
+    ),
+    Rule(
+        "no-complex-titles",
+        False,
+        "Title should be easy to read",
+        general_rules.passes_no_complex_titles
+    ),
+    Rule(
+        "require-legend",
+        True,
+        "A legend must be used",
+        general_rules.passes_require_legend
+    ),
+    Rule(
+        "no-indistinguishable-series",
+        True,
+        "Series must be distinguishable",
+        general_rules.passes_no_indistinguishable_series
+    ),
+    Rule(
+        "no-pie",
+        True,
+        "Pie charts are not allowed",
+        general_rules.passes_no_pie
+    ),
+    Rule(
+        "maximum-pie-pieces",
+        6,
+        "This pie chart has more than the allowed number of wedges",
+        general_rules.passes_maximum_pie_pieces
+    ),
+    Rule(
+        "maximum-histogram-bins",
+        50,
+        "This histogram has more than the allowed number of bins",
+        general_rules.passes_maximum_histogram_bins
+    ),
+    Rule(
+        "no-radial",
+        True,
+        "Radial charts are not allowed",
+        general_rules.passes_no_radial
+    ),
 
     # algebraic
-    "representation-invariance": 0.1,
+    Rule(
+        "representation-invariance",
+        0.1,
+        "The order the of the points is not significant",
+        algebraic_rules.passes_only_data_driven_visuals
+    ),
 
     # color
-    "max-colors": 6,
+    Rule(
+        "max-colors",
+        6,
+        "Too many colors",
+        color_rules.passes_max_colors
+    ),
+    Rule(
+        "printable-colors",
+        True,
+        "Colors must be printable",
+        color_rules.passes_printable_colors
+    ),
 
-    # ml rules
-    "ledgible-text": False,
+    # computational
+    Rule(
+        "ledgible-text",
+        False,
+        "text must be ledgible",
+        computational_rules.passes_ledgible_text
+    ),
 
-    "require-annotation": False
-}
+    # other
+    Rule(
+        "require-annotation",
+        False,
+        "annotations must be used",
+        annotation_rules.passes_require_annotation
+    )
+]
 
-RULES_EXPLANATION = {
-    "require-titles": "Titles are required",
-    "no-short-titles": "Short titles are not allowed (must be greater than 1 word)",
-    "no-complex-titles": "Title should be easy to read",
-    "sentencify": "Title should be in complete sentences",
-    "require-axes": "Axes must be labeled",
-    "require-legend": "A legend must be used",
-    "no-pie": "Pie charts are not allowed",
-    "maximum-pie-pieces": "This pie chart has more than the allowed number of wedges",
-    "maximum-histogram-bins": "This histogram has more than the allowed number of bins",
-    "no-radial": "Radial charts are not allowed",
-    "representation-invariance": "The order the of the points is not significant",
-    "max-colors": "Too many colors",
-    "no-indistinguishable-series": "Series must be distinguishable",
-    "require-annotation": "annotations must be used",
-    "ledgible-text": "text must be ledgible"
-}
+DEFAULT_CONFIGURATION = {}
+RULES_EXPLANATION = {}
+RULE_TO_FUNCTION_MAP = {}
+for title, default, explanation, rule_eval in RULES_CONFIGS:
+    DEFAULT_CONFIGURATION[title] = default
+    RULES_EXPLANATION[title] = explanation
+    RULE_TO_FUNCTION_MAP[title] = rule_eval
 
 
 def reconcile_configurations(old_config, new_config):
