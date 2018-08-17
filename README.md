@@ -30,7 +30,7 @@ In the additional materials folder we provide a collection of additional lint ru
 
 This library consists of a single function that takes two mandatory arguments and an optional third
 
-vislint_mpl(**axes**, **fig**, configuration={})
+vislint(**axes**, **fig**, configuration={})
 
 - **axes** - matplotlib [axes](https://matplotlib.org/api/axes_api.html) object
 
