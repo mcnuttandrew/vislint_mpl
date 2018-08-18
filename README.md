@@ -1,6 +1,6 @@
 # vislint_mpl: a prototype visualization linter for matplotlib
 
-vislint_mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting provides a robust mechanism to provide guidance to chart creators as the work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint_mpl in a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through code editors now.
+vislint_mpl is an automated system for evaluating the effectiveness of visualization based on a collection of predefined rules. Visualization linting is a robust mechanism to provide guidance to chart creators as they work through the steps of creating a visualization. The dream of this project is that users will be able to run vislint_mpl in a computational notebook setting, like jupyter, and have their visualizations evaluated on every code change, much like spell check or in the way that lint is accessed through modern code editors.
 
 
 This work is in the proof of concept stage of development, it is messy and there are limited number of rules implemented. Currently the rules that are implemented are:
@@ -23,13 +23,13 @@ This work is in the proof of concept stage of development, it is messy and there
 - printable-colors
 
 
-Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/). The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as reference while creating it.
+Our organizational scheme follows that of Meeks's [viz-linting](https://github.com/emeeks/viz-linting), though another ordering, such as one analogous to the tagging system found on [VisGuides](https://visguides.dbvis.de/) or the taxonomical system found on the [Visualization Guidelines Repository](http://visguides.repo.dbvis.de/), could be implemented. The structure of this library is also heavily indebted to [write-good](https://github.com/btford/write-good) which we used as a reference.
 
-In the additional materials folder we provide a collection of additional lint rules and example notebooks of using vislint_mpl against charts sometimes found in the wild.
+In the additional materials folder we provide a collection of additional lint rules and example notebooks that consider vislint_mpl opinions on a variety of charts sometimes found in the wild.
 
 ## API
 
-This library consists of a single function that takes two mandatory arguments and an optional third
+This library consists of a single function that takes two mandatory arguments and an optional third argument
 
 vislint_mpl(**axes**, **fig**, configuration={})
 
