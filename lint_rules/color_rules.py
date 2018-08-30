@@ -2,7 +2,7 @@
 Lint rules for color based rules
 """
 
-from matplotlib.colors import to_rgba, rgb_to_hsv
+from matplotlib.colors import to_rgba
 from lint_rules.utils import get_count_patch_type_count, has_method
 
 def get_uniques(colors):
@@ -58,21 +58,17 @@ def get_colors_from_object(axes):
     """
     # scatterplot
     if len(axes.collections) >= 1:
-        print("scatterplot")
         return get_colors_in_scatterplot(axes)
 
     # radial
     if get_count_patch_type_count(axes.patches, 'Wedge') >= 1:
-        print("radial")
         return get_colors_in_patches(axes, 'Wedge')
 
     # rect
     if get_count_patch_type_count(axes.patches, 'Rect') >= 1:
-        print("rect")
         return get_colors_in_patches(axes, 'Rect')
 
     # check children otherwise
-    print("other")
     return get_colors_in_children(axes)
 
 def passes_max_colors(axes, fig, config_value):
@@ -87,6 +83,12 @@ def maybe_convert_hex(color):
     """
     return to_rgba(color) if isinstance(color, str) else color
 
+def rgb_to_gray(color):
+    """
+    convert a tuple of r g b values to gray scale
+    """
+    return (0.3 * color[0]) + (0.59 * color[1]) + (0.11 * color[2])
+
 def passes_printable_colors(axes, fig, config_value):
     """
     lint rule for printable colors
@@ -94,12 +96,15 @@ def passes_printable_colors(axes, fig, config_value):
     if the number of these colors is different then fail.
 
     Could be configured to accept a minimum threshold distance between the color values
+
+    https://www.tutorialspoint.com/dip/grayscale_to_rgb_conversion.htm
     """
     background_color = fig.patch.get_facecolor()
     values = [
-        rgb_to_hsv(maybe_convert_hex(color)[0:3])[2]
+        round(rgb_to_gray(maybe_convert_hex(color)), config_value)
         for color in get_colors_from_object(axes)
         if color != background_color
         ]
+    print (values)
 
     return len(get_uniques(values)) == len(values)

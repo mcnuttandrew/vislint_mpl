@@ -128,8 +128,7 @@ def test_no_pie():
         ("require-axes", 'Axes must be labeled'),
         ("require-legend", 'A legend must be used'),
         ("no-pie", 'Pie charts are not allowed'),
-        ("no-radial", 'Radial charts are not allowed'),
-        ('printable-colors', 'Colors must be printable'),
+        ("no-radial", 'Radial charts are not allowed')
         # logically this should fail this test, however we can"t verify that from the library
         # level i think
         # ("representation-invariance", 'The order the of the points is not significant')
@@ -149,11 +148,45 @@ def test_no_pie():
         ("require-legend", 'A legend must be used'),
         ("maximum-pie-pieces", 'This pie chart has more than the allowed number of wedges'),
         ('max-colors', 'Too many colors'),
-        ('printable-colors', 'Colors must be printable'),
         ("require-annotation", "annotations must be used"),
     ]
 
-# algebraic smoke test?
+def test_printable_colors():
+    """
+    tests for pie chart
+    copied from https://matplotlib.org/examples/pie_and_polar_charts/pie_demo_features.html
+    Pie chart, where the slices will be ordered and plotted counter-clockwise:
+    """
+    fig, ax = plt.subplots()
+
+    size = 0.3
+    vals = np.array([[60., 32.], [37., 40.], [29., 10.]])
+
+    cmap = plt.get_cmap("tab20c")
+    outer_colors = cmap(np.arange(3)*4)
+    inner_colors = cmap(np.array([1, 2, 5, 6, 9, 10]))
+
+    ax.pie(vals.sum(axis=1), radius=1, colors=outer_colors,
+           wedgeprops=dict(width=size, edgecolor='w'))
+
+    ax.pie(vals.flatten(), radius=1-size, colors=inner_colors,
+           wedgeprops=dict(width=size, edgecolor='w'))
+
+    ax.set(aspect="equal", title='Pie plot with `ax.pie`')
+
+    assert vislint(ax, fig) == [
+        ('require-axes', 'Axes must be labeled'),
+        ('require-legend', 'A legend must be used'),
+        ('no-pie', 'Pie charts are not allowed'),
+        ('maximum-pie-pieces',
+        'This pie chart has more than the allowed number of wedges'),
+        ('no-radial', 'Radial charts are not allowed'),
+        ('max-colors', 'Too many colors'),
+        ('printable-colors', 'Colors must be printable')
+        ]
+
+
+
 def test_small_scatterplot():
     """
     Test focusing on algebraic scatterplot
@@ -290,8 +323,8 @@ def test_multi_series_plot_test():
 #     # does very very poorly
 #     assert vislint(ax, fig, configuration={
 #         "ledgible-text": True,
-#         "require-annotation": True
-#     }) == []
+        "require-annotation": True
+    }) == []
 
 
 def passes_only_data_driven_visuals(axes, fig, config_value):
