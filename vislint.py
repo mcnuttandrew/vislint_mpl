@@ -99,7 +99,7 @@ RULES_CONFIGS = [
     ),
     Rule(
         "printable-colors",
-        True,
+        2,
         "Colors must be printable",
         color_rules.passes_printable_colors
     ),
