@@ -120,4 +120,4 @@ jupyter notebook
 
 It may be necessary to also run ```ipython kernel install --user``` in order to get everything installe correctly.
 
-Of particular note, we have provided the notebook used to produce the figure found in the paper associated with this work. That graphic is drawn from the sprawling github Jupyter notebook corpus found [here](https://library.ucsd.edu/dc/collection/bb6931851t). The figure used in the paper is drawn from a reconstruction of the original notebook (rebuild rebuild_of_nb_266110) which we present along side the original (nb_266110) for transparency.
+Of particular note, we have provided the notebook used to produce the figure found in the paper associated with this work. That graphic is drawn from the sprawling github Jupyter notebook corpus found [here](https://library.ucsd.edu/dc/collection/bb6931851t). The figure used in the paper is drawn from a reconstruction of the original notebook (rebuild_of_nb_266110) which we present along side the original (nb_266110) for transparency.
